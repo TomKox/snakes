@@ -12,6 +12,7 @@ namespace Snakes
         static void Main(string[] args)
         {
             Console.Title = "Snakes";
+            UI.Title();
             do
             {
 

@@ -8,6 +8,17 @@ namespace Snakes
 {
     class UI
     {
+
+        public static void Title()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            ConsoleHelper.Center("S N A K E S");
+            int y = Console.CursorTop += 2;
+            Console.ForegroundColor = ConsoleColor.White;
+            ConsoleHelper.Center("Press any key to begin...", y + 5);
+            Console.ReadKey();
+        }
         public static bool GameOver()
         {
             Console.ForegroundColor = ConsoleColor.Red;
