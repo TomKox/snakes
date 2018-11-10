@@ -117,8 +117,7 @@ namespace Snakes
         public void UpdateScore()
         {
             Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(5, height + 1);
-            Console.Write("Score: " + snake.Score);
+            ConsoleHelper.Center("Score: " + snake.Score, height + 1);
         }
         
         public bool HasTargetAt(int x, int y)
