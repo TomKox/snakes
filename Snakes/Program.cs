@@ -20,8 +20,13 @@ namespace Snakes
             while(arena.Next())
             {
                 arena.ReadKey();
-                Thread.Sleep(100);
             }
+
+            Thread.Sleep(1000);
+            Console.SetCursorPosition(10, 10);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("G A M E  O V E R");
+            Thread.Sleep(1000);
             Console.ReadKey();
         }
     }

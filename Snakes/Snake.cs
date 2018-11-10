@@ -17,7 +17,10 @@ namespace Snakes
         private List<Cell> cells;
         private int x, y;
         private int grow;
+        private int score;
         private Arena arena;
+        private int speed;
+        private DateTime lastMove;
 
         public Snake(char cellChar, int startX, int startY, int startSize, Direction startDirection, Arena arena)
         {
@@ -28,6 +31,9 @@ namespace Snakes
             grow = startSize;
             Direction = startDirection;
             Arena = arena;
+            Speed = 10;
+            this.score = 0;
+            lastMove = DateTime.Now;
 
             Console.SetCursorPosition(x, y);
             cells = new List<Cell>();
@@ -38,6 +44,9 @@ namespace Snakes
 
         public char CellChar { get => cellChar; }
         public int Size { get => size; }
+        public ConsoleColor Color { get => color; set => color = value; }
+        public int Speed { get => speed; set => speed = value; }
+        public int Score { get => score; }
         internal Direction Direction { get => direction; set => direction = value; }
         internal Arena Arena { get => arena; set => arena = value; }
         internal List<Cell> Cells { get => cells; }
@@ -46,56 +55,65 @@ namespace Snakes
         {
             int headX, headY;
             Cell tail;
-            
-            switch(Direction)
+            if ((DateTime.Now - lastMove).Milliseconds > 100)
             {
-                case Direction.North:
-                    y = y - 1;
-                    break;
-                case Direction.East:
-                    x = x + 1;
-                    break;
-                case Direction.South:
-                    y = y + 1;
-                    break;
-                case Direction.West:
-                    x = x - 1;
-                    break;
-            }
-            
-            if(arena.HasObstacleAt(x,y))
-            {
-                Console.SetCursorPosition(x, y);
-                Console.Write('X');
-                return false;
-            }
-            else {
-                if (arena.HasTargetAt(x, y))
-                {
-                    grow = 3;
-                    arena.NewTarget();
-                }
-                cells.Add(new Cell(cellChar, x, y));
-                size = cells.Count;
-                headX = cells[size - 1].X;
-                headY = cells[size - 1].Y;
-                Console.SetCursorPosition(headX, headY);
-                Console.Write(cells[size - 1]);
+                lastMove = DateTime.Now;
 
-                if(grow != 0)
+                switch (Direction)
                 {
-                    grow--;
+                    case Direction.North:
+                        y = y - 1;
+                        break;
+                    case Direction.East:
+                        x = x + 1;
+                        break;
+                    case Direction.South:
+                        y = y + 1;
+                        break;
+                    case Direction.West:
+                        x = x - 1;
+                        break;
+                }
+
+                if (arena.HasObstacleAt(x, y))
+                {
+                    Console.SetCursorPosition(x, y);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write('X');
+                    return false;
                 }
                 else
                 {
-                    tail = cells[0];
-                    Console.SetCursorPosition(tail.X, tail.Y);
-                    Console.Write(' ');
-                    cells.Remove(tail);
-                    cells.TrimExcess();
+                    if (arena.HasTargetAt(x, y))
+                    {
+                        grow = 3;
+                        score++;
+                        arena.NewTarget();
+                    }
+                    cells.Add(new Cell(cellChar, x, y));
+                    size = cells.Count;
+                    headX = cells[size - 1].X;
+                    headY = cells[size - 1].Y;
+                    Console.ForegroundColor = Color;
+                    Console.SetCursorPosition(headX, headY);
+                    Console.Write(cells[size - 1]);
+
+                    if (grow != 0)
+                    {
+                        grow--;
+                    }
+                    else
+                    {
+                        tail = cells[0];
+                        Console.SetCursorPosition(tail.X, tail.Y);
+                        Console.Write(' ');
+                        cells.Remove(tail);
+                        cells.TrimExcess();
+                    }
+                    return true;
                 }
-                return true;
             }
+            else return true;
 
         }
     }

@@ -26,7 +26,7 @@ namespace Snakes
         {
             this.ObstacleChar = obstacleChar;
             obstacles = new List<Cell>();
-            this.height = Console.WindowHeight-1;
+            this.height = Console.WindowHeight-3;
             this.width = Console.WindowWidth-1;
             Console.CursorVisible = false;
             this.color = ConsoleColor.White;
@@ -64,7 +64,8 @@ namespace Snakes
 
         public void AddSnake(int x, int y)
         {
-            snake = new Snake('O', x, y, 10, Direction.South, this);
+            snake = new Snake('O', x, y, 3, Direction.South, this);
+            snake.Color = ConsoleColor.Yellow;
         }
 
         public bool Next()
@@ -94,6 +95,9 @@ namespace Snakes
         public void NewTarget()
         {
             int x, y;
+
+            UpdateScore();
+
             do
             {
                 Random rnd = new Random();
@@ -102,10 +106,18 @@ namespace Snakes
             }
             while (this.HasObstacleAt(x, y));
 
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.SetCursorPosition(x, y);
             Console.Write('T');
             targetX = x;
             targetY = y;
+        }
+
+        public void UpdateScore()
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(5, height + 1);
+            Console.Write("Score: " + snake.Score);
         }
         
         public bool HasTargetAt(int x, int y)
@@ -121,16 +133,16 @@ namespace Snakes
                 switch(inkey)
                 {
                     case ConsoleKey.UpArrow:
-                        if(snake.Direction != Direction.North) snake.Direction = Direction.North;
+                        if(snake.Direction != Direction.South) snake.Direction = Direction.North;
                         break;
                     case ConsoleKey.RightArrow:
-                        if (snake.Direction != Direction.East) snake.Direction = Direction.East;
+                        if (snake.Direction != Direction.West) snake.Direction = Direction.East;
                         break;
                     case ConsoleKey.DownArrow:
-                        if (snake.Direction != Direction.South) snake.Direction = Direction.South;
+                        if (snake.Direction != Direction.North) snake.Direction = Direction.South;
                         break;
                     case ConsoleKey.LeftArrow:
-                        if (snake.Direction != Direction.West) snake.Direction = Direction.West;
+                        if (snake.Direction != Direction.East) snake.Direction = Direction.West;
                         break;
                 }
             }
