@@ -55,7 +55,7 @@ namespace Snakes
         {
             int headX, headY;
             Cell tail;
-            if ((DateTime.Now - lastMove).Milliseconds > 100)
+            if ((DateTime.Now - lastMove).Milliseconds > 150)
             {
                 lastMove = DateTime.Now;
 
@@ -86,7 +86,7 @@ namespace Snakes
                 {
                     if (arena.HasTargetAt(x, y))
                     {
-                        grow = 3;
+                        grow = 4;
                         score++;
                         arena.NewTarget();
                     }
