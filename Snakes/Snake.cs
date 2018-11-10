@@ -108,7 +108,6 @@ namespace Snakes
                         Console.SetCursorPosition(tail.X, tail.Y);
                         Console.Write(' ');
                         cells.Remove(tail);
-                        cells.TrimExcess();
                     }
                     return true;
                 }
