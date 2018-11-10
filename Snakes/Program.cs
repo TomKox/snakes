@@ -11,23 +11,22 @@ namespace Snakes
     {
         static void Main(string[] args)
         {
-            Arena arena = new Arena();
-            arena.addBorder();
-            arena.Draw();
-            arena.AddSnake(10, 10);
-            arena.NewTarget();
-        
-            while(arena.Next())
+            do
             {
-                arena.ReadKey();
-            }
 
-            Thread.Sleep(1000);
-            Console.SetCursorPosition(10, 10);
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("G A M E  O V E R");
-            Thread.Sleep(1000);
-            Console.ReadKey();
+                Arena arena = new Arena();
+                arena.addBorder();
+                arena.Draw();
+                arena.AddSnake(10, 10);
+                arena.NewTarget();
+
+                while (arena.Next())
+                {
+                    arena.ReadKey();
+                }
+            }
+            while (!UI.GameOver());
+
         }
     }
 }

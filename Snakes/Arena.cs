@@ -24,6 +24,7 @@ namespace Snakes
 
         public Arena(char obstacleChar)
         {
+            Console.Clear();
             this.ObstacleChar = obstacleChar;
             obstacles = new List<Cell>();
             this.height = Console.WindowHeight-3;

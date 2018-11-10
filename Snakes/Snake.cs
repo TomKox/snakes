@@ -90,7 +90,7 @@ namespace Snakes
                         score++;
                         arena.NewTarget();
                     }
-                    cells.Add(new Cell(cellChar, x, y));
+                    cells.Add(new Cell(CellChar, x, y));
                     size = cells.Count;
                     headX = cells[size - 1].X;
                     headY = cells[size - 1].Y;
@@ -98,7 +98,7 @@ namespace Snakes
                     Console.SetCursorPosition(headX, headY);
                     Console.Write(cells[size - 1]);
 
-                    if (grow != 0)
+                    if (grow > 1)
                     {
                         grow--;
                     }
