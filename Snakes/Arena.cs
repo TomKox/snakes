@@ -13,7 +13,11 @@ namespace Snakes
         private List<Cell> obstacles;
         private int height, width;
         private ConsoleColor color;
-        public Arena() : this('X')
+        private Snake snake;
+        private int targetX, targetY;
+
+
+        public Arena() : this('.')
         {
 
         }
@@ -55,6 +59,80 @@ namespace Snakes
             {
                 Console.SetCursorPosition(obstacle.X, obstacle.Y);
                 Console.Write(obstacle);
+            }
+        }
+
+        public void AddSnake(int x, int y)
+        {
+            snake = new Snake('O', x, y, 10, Direction.South, this);
+        }
+
+        public bool Next()
+        {
+            return snake.Move();
+        }
+
+        public bool HasObstacleAt(int x, int y)
+        {
+            bool obstacleFound = false;
+
+            List<Cell> allObstacles = new List<Cell>();
+            allObstacles.AddRange(obstacles);
+            allObstacles.AddRange(snake.Cells);
+
+            foreach(Cell c in allObstacles)
+            {
+                if(c.X == x && c.Y == y)
+                {
+                    obstacleFound = true;
+                    break;
+                }
+            }
+            return obstacleFound;
+        }
+
+        public void NewTarget()
+        {
+            int x, y;
+            do
+            {
+                Random rnd = new Random();
+                x = rnd.Next(1, width);
+                y = rnd.Next(1, height);
+            }
+            while (this.HasObstacleAt(x, y));
+
+            Console.SetCursorPosition(x, y);
+            Console.Write('T');
+            targetX = x;
+            targetY = y;
+        }
+        
+        public bool HasTargetAt(int x, int y)
+        {
+            if (x == targetX && y == targetY) return true;
+            else return false;
+        }
+
+        public void ReadKey()
+        {
+            if(Console.KeyAvailable) { 
+                ConsoleKey inkey = Console.ReadKey().Key;
+                switch(inkey)
+                {
+                    case ConsoleKey.UpArrow:
+                        if(snake.Direction != Direction.North) snake.Direction = Direction.North;
+                        break;
+                    case ConsoleKey.RightArrow:
+                        if (snake.Direction != Direction.East) snake.Direction = Direction.East;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if (snake.Direction != Direction.South) snake.Direction = Direction.South;
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        if (snake.Direction != Direction.West) snake.Direction = Direction.West;
+                        break;
+                }
             }
         }
     }
