@@ -38,8 +38,6 @@ namespace Snakes
             Console.SetCursorPosition(x, y);
             cells = new List<Cell>();
             cells.Add(new Cell(CellChar, x, y));
-
-
         }
 
         public char CellChar { get => cellChar; }
@@ -55,7 +53,7 @@ namespace Snakes
         {
             int headX, headY;
             Cell tail;
-            if ((DateTime.Now - lastMove).Milliseconds > 150)
+            if ((DateTime.Now - lastMove).Milliseconds > 200 - Speed)
             {
                 lastMove = DateTime.Now;
 
@@ -88,15 +86,16 @@ namespace Snakes
                     {
                         grow = 4;
                         score++;
+                        speed += 10;
                         arena.NewTarget();
                     }
                     cells.Add(new Cell(CellChar, x, y));
                     size = cells.Count;
-                    headX = cells[size - 1].X;
-                    headY = cells[size - 1].Y;
+                    headX = cells.Last().X;
+                    headY = cells.Last().Y;
                     Console.ForegroundColor = Color;
                     Console.SetCursorPosition(headX, headY);
-                    Console.Write(cells[size - 1]);
+                    Console.Write(CellChar);
 
                     if (grow > 1)
                     {
@@ -113,7 +112,6 @@ namespace Snakes
                 }
             }
             else return true;
-
         }
     }
 }
