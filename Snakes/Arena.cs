@@ -145,6 +145,7 @@ namespace Snakes
                         if (snake.Direction != Direction.East) snake.Direction = Direction.West;
                         break;
                 }
+                snake.Move(true);
             }
         }
     }

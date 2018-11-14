@@ -49,11 +49,17 @@ namespace Snakes
         internal Arena Arena { get => arena; set => arena = value; }
         internal List<Cell> Cells { get => cells; }
 
-        public bool Move()
+        public bool Move(bool forceMove=false)
         {
             int headX, headY;
+            bool move;
+
+            if ((DateTime.Now - lastMove).Milliseconds > 200 - Speed) move = true;
+            else if (forceMove) move = true;
+            else move = false;
+
             Cell tail;
-            if ((DateTime.Now - lastMove).Milliseconds > 200 - Speed)
+            if (move)
             {
                 lastMove = DateTime.Now;
 
