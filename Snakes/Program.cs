@@ -20,6 +20,7 @@ namespace Snakes
                 arena.addBorder();
                 arena.Draw();
                 arena.AddSnake(10, 10);
+                arena.AddSnake(40, 10);
                 arena.NewTarget();
 
                 while (arena.Next())

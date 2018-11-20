@@ -92,7 +92,7 @@ namespace Snakes
                     {
                         grow = 4;
                         score++;
-                        speed += 10;
+                        //  speed += 10;
                         arena.NewTarget();
                     }
                     cells.Add(new Cell(CellChar, x, y));
